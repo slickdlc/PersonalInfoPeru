@@ -1,0 +1,222 @@
+openapi: 3.0.3
+info:
+  title: Api Rest Se Colectiva
+  description: |-
+    Api rest del sistema BPAL para mesandina
+  version: 1.0.0
+servers:
+  - url: https://mesandina-pre.secodefwk.com/wscbpal/pre/api/v1
+  - url: https://mesandina-pre.secodefwk.com/wscbpal/pro/api/v1
+x-ver: v1
+tags:
+  - name: Sunat
+    description: Temas referidos la sunat, como búsqueda por dni o ruc, etc.
+
+paths:
+  /sunat/persona/dni:
+    get:
+      x-controller-path: User
+      tags:
+        - Sunat
+      summary: Búsqueda por dni
+      description: Buscar una persona por dni
+      operationId: findPersonaByDni
+      parameters:
+        - name: dni
+          in: query
+          description: Número del dni.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonaSunat'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PersonaSunat'
+        '400':
+          description: Bad params
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /sunat/empresa/ruc:
+    get:
+      x-controller-path: User
+      tags:
+        - Sunat
+      summary: Búsqueda por ruc
+      description: Buscar una empresa por número de ruc
+      operationId: findEmpresaByRuc
+      parameters:
+        - name: ruc
+          in: query
+          description: Número del ruc.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmpresaSunat'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/EmpresaSunat'
+        '400':
+          description: Bad params
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+components:
+  schemas:
+    SuccessMessage:
+      x-api-generator-ignore: true
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          additionalProperties:
+            type: string
+            example: Token xdxd
+        message:
+          type: string
+          example: La operación se ha efectuado con éxito
+    ErrorMessage:
+      x-api-generator-ignore: true
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Ha ocurrido un error
+        error:
+          type: object
+          additionalProperties:
+            type: string
+            example: Este campo no ha sido ingresado
+    PersonaSunat:
+      type: object
+      properties:
+        dni:
+          type: string
+          example: "00000000"
+        nombres:
+          type: string
+          example: John
+        apellidoPaterno:
+          type: string
+          example: Doe
+        apellidoMaterno:
+          type: string
+          example: Doe
+        codVerifica:
+          type: string
+          example: "CODIGO_UNIQUE"
+    EmpresaSunat:
+      type: object
+      properties:
+        ruc:
+          type: string
+          example: 10101010101
+        razonSocial:
+          type: string
+          example: "Nombre Social"
+        nombreComercial:
+          type: string
+          example: "Nombre Comercial"
+        telefonos:
+          type: array
+          items:
+            type: string
+            example: "telefono"
+        tipo:
+          type: string
+          example: "tipo"
+        estado:
+          type: string
+          example: "estado"
+        condicion:
+          type: string
+          example: "condicion"
+        direccion:
+          type: string
+          example: "direccion"
+        departamento:
+          type: string
+          example: "departamento"
+        provincia:
+          type: string
+          example: "provincia"
+        distrito:
+          type: string
+          example: "distrito"
+        fechaInscripcion:
+          type: string
+          example: "fechaInscripcion"
+        sistEmsion:
+          type: string
+          example: "sistEmsion"
+        sistContabilidad:
+          type: string
+          example: "sistContabilidad"
+        actExterior:
+          type: string
+          example: "actExterior"
+        actEconomicas:
+          type: array
+          items:
+            type: string
+            example: "actEconomica"
+        cpPago:
+          type: array
+          items:
+            type: string
+            example: "cpPago"
+        sistElectronica:
+          type: array
+          items:
+            type: string
+            example: "sistElectronica"
+        fechaEmisorFe:
+          type: string
+          example: "fechaEmisorFe"
+        cpeElectronico:
+          type: array
+          items:
+            type: string
+            example: "cpeElectronico"
+        fechaPle:
+          type: string
+          example: "fechaPle"
+        padrones:
+          type: array
+          items:
+            type: string
+            example: "padrones"
+        fechaBaja:
+          type: string
+          example: "fechaBaja"
+        profesion:
+          type: string
+          example: "profesion"
+
